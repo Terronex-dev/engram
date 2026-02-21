@@ -1,12 +1,12 @@
 /**
- * AIF-BIN v3 Core Types
+ * Engram Core Types
  * 
- * Hierarchical, temporal, multi-modal AI memory format
+ * Neural memory format for AI systems - hierarchical, temporal, multi-modal
  */
 
 // ============== HEADER ==============
 
-export interface AifBinV3Header {
+export interface EngramHeader {
   version: [3, number];
   created: number;
   modified: number;
@@ -200,8 +200,8 @@ export interface Delta {
 
 // ============== FILE STRUCTURE ==============
 
-export interface AifBinV3File {
-  header: AifBinV3Header;
+export interface EngramFile {
+  header: EngramHeader;
   nodes: MemoryNode[];
   entities: Entity[];
   links: MemoryLink[];

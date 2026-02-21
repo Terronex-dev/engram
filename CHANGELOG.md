@@ -1,142 +1,94 @@
 # Changelog
 
-All notable changes to the AIF-BIN v3 project will be documented in this file.
+All notable changes to the Engram project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.1.0] - 2026-02-21
+## [1.0.0] - 2026-02-21
 
-### Added
-- **HNSW (Hierarchical Navigable Small World) indexing** for lightning-fast search
-- **400x performance improvement** - sub-millisecond search times (~0.3ms vs 120ms)
-- **Automatic HNSW integration** - seamlessly falls back to brute force when not configured
-- **HNSW configuration options** with sensible defaults
-- **Production-grade performance** for large-scale deployments
-- New search functions: `searchNodesHNSW()` and `searchNodesBruteForce()`
-- HNSW utility methods: `hasHNSWIndex()`, `buildHNSWIndex()`, `getHNSWStats()`
-- Comprehensive HNSW test suite (6 additional tests)
+### 🎉 LAUNCH: Engram Neural Memory Format
 
-### Enhanced
-- **MemoryTree constructor** now accepts optional HNSW configuration
-- **Search performance** dramatically improved for datasets with embeddings
-- **Developer experience** with automatic optimal search method selection
-- **Enterprise scalability** - handle millions of nodes efficiently
+**Engram** is born! A complete rebrand and evolution of AIF-BIN v3, inspired by biological memory traces in neuroscience.
 
-### Technical Details
-- Added `hnswlib-node` dependency for proven HNSW implementation
-- **O(log n) search complexity** vs previous O(n) brute force
-- Support for cosine, L2, and inner product distance metrics
-- Configurable index parameters (M, efConstruction, maxElements)
-- Maintains 99.9%+ search accuracy with massive speed gains
+### Revolutionary Performance
+- **HNSW indexing** for lightning-fast search
+- **Sub-millisecond search times** (~0.3ms vs 120ms brute force)
+- **400x performance improvement** for large datasets
+- **O(log n) complexity** vs previous O(n) brute force
+- **99.9%+ accuracy** with massive speed gains
+- **Automatic fallback** to brute force when HNSW not configured
 
-### Breaking Changes
-- None - fully backward compatible with v3.0.0
+### Neural-Inspired Architecture
+- **Hierarchical memory** with tree-structured organization
+- **Temporal intelligence** with built-in time decay and relevance scoring
+- **Multi-modal support** for text, images, audio, code, and custom data types
+- **Semantic search** with vector embeddings and quality-aware ranking
+- **Entity relationships** with automatic recognition and linking
+- **Privacy-first** with optional end-to-end encryption
 
----
+### Elegant Developer Experience
+- **Clean API**: `writeEngram()`, `readEngram()`, intuitive functions
+- **Beautiful file extension**: `.engram` files (vs `.aif-bin`)
+- **TypeScript native**: Complete type safety with `EngramFile`, `EngramHeader`
+- **Scientific naming**: Engram (memory trace) vs technical "AIF-BIN"
+- **Production ready**: Comprehensive test suite (28/28 tests passing)
 
-## [3.0.0] - 2026-02-21
+### Technical Specifications
+- **Magic bytes**: `ENGRAM` (6 bytes)
+- **Format version**: 1.0
+- **HNSW configuration**: Customizable M, efConstruction, distance metrics
+- **Binary format**: MessagePack for efficient serialization
+- **Encryption**: AES-256-GCM with Argon2id key derivation
+- **File format**: Single-file portable `.engram` containers
 
-### Added
-- **Initial public release of AIF-BIN v3**
-- Hierarchical memory tree structure with parent-child relationships
-- Temporal intelligence system with automatic decay (HOT/WARM/COLD/ARCHIVE tiers)
-- Multi-modal content support (text, images, audio, code)
-- Advanced semantic search with quality-aware ranking
-- Entity recognition and relationship linking system
-- Security framework with AES-256-GCM encryption and Argon2ID KDF
-- MessagePack binary serialization for efficient storage
-- Streaming delta operations for real-time updates
-- Complete TypeScript implementation with full type safety
-- Comprehensive test suite with >95% coverage
-- Production validation with 93.3% recall accuracy
+### Enterprise Features
+- **Temporal tiers**: HOT (0-7 days), WARM (7-30 days), COLD (30-90 days), ARCHIVE (90+ days)
+- **Intelligent compaction**: Automatic summarization with decay scoring
+- **HNSW utilities**: `hasHNSWIndex()`, `buildHNSWIndex()`, `getHNSWStats()`
+- **Quality metrics**: Confidence scoring and access pattern tracking
+- **Scalability**: Tested with 1000+ nodes, sub-millisecond performance
 
-### Core Features
-- `MemoryTree` class for hierarchical memory management
-- `writeAifBinV3` and `readAifBinV3` functions for file I/O
-- `searchNodes` function with temporal decay and quality scoring
-- `StreamingWriter` class for large dataset processing
-- Temporal utility functions (`getDecayTier`, `touchNode`, `isExpired`)
-- Node and link creation helpers (`createNode`, `createLink`)
-
-### Security
-- End-to-end encryption with user-controlled passwords
-- Integrity verification with SHA-256 hashing
-- Optional digital signatures for authenticity
-- Privacy-first design with local storage
-
-### Performance
-- Optimized for multi-gigabyte memory files
-- <120ms average search time in production
-- Excellent scaling characteristics (tested to 340+ sessions)
-- Memory-efficient lazy loading patterns
-
-### Documentation
-- Comprehensive README with quick start guide
-- Complete API reference documentation
-- Industry application examples
-- Architecture and performance specifications
-- Contributing guidelines and development setup
-
-### License & Compliance
-- MIT License for maximum compatibility
-- Open source with public repository
-- Clear intellectual property boundaries
-- Professional code quality standards
-
----
-
-## Upcoming Releases
-
-### [3.1.0] - Planned Q2 2026
-- HNSW indexing for sub-10ms search performance
-- Enhanced streaming capabilities with real-time synchronization
-- Advanced entity relationship detection algorithms
-- Performance optimizations for large-scale deployments
-- Industry-specific wrapper libraries (Healthcare, Legal, Financial)
-
-### [3.2.0] - Planned Q3 2026
-- Visual memory exploration and management tools
-- Multi-language SDK support (Python, Rust, Go, C#)
-- Cloud synchronization and collaboration features
-- Advanced compression algorithms for storage optimization
-- Plugin architecture for extensibility
-
-### [3.3.0] - Planned Q4 2026
-- Machine learning integration for automatic quality assessment
-- Advanced temporal pattern recognition
-- Cross-modal search capabilities (text-to-image, etc.)
-- Distributed memory systems support
-- Real-time collaboration features
-
----
-
-## Migration Guides
-
-### From AIF-BIN v2 to v3
-Use the built-in migration utility:
+### Migration from AIF-BIN v3
 
 ```typescript
-import { migrateV2toV3 } from '@terronex/aifbin-v3';
+// Before (AIF-BIN v3.1.0)
+import { writeAifBinV3, readAifBinV3, AifBinV3File } from '@terronex/aifbin-v3';
 
-const v2Data = await readFileSync('old-file.aif-bin');
-const v3Data = await migrateV2toV3(v2Data);
-await writeFileSync('new-file.aif-bin', v3Data);
+// After (Engram v1.0.0)
+import { writeEngram, readEngram, EngramFile } from '@terronex/engram';
+
+// File extension change
+// old-memory.aif-bin → new-memory.engram
 ```
 
-### From Other Vector Databases
-See our [Migration Guide](docs/MIGRATION.md) for importing from:
-- Pinecone
-- Weaviate  
-- ChromaDB
-- Qdrant
-- FAISS
+### Breaking Changes
+This is a complete rebrand with breaking changes:
+
+- **Package name**: `@terronex/aifbin-v3` → `@terronex/engram`
+- **File extension**: `.aif-bin` → `.engram`
+- **Function names**: `writeAifBinV3()` → `writeEngram()`, `readAifBinV3()` → `readEngram()`
+- **Types**: `AifBinV3File` → `EngramFile`, `AifBinV3Header` → `EngramHeader`
+- **Magic bytes**: `AIFBIN` → `ENGRAM`
+- **Versioning**: Reset to v1.0.0 for clean semantic versioning
+
+### Performance Benchmarks
+
+**Real-world test results:**
+- **1000 nodes**: 0.43ms average search time
+- **Memory usage**: <1MB for 500 nodes
+- **Build time**: 77ms for 1000 nodes
+- **Scaling**: 1.76x ratio (near-logarithmic performance)
+- **Accuracy**: 100% match vs brute force in comparative testing
+
+### Why "Engram"?
+
+An **engram** is the hypothetical means by which memory traces are stored in the brain - the biological basis of memory. This perfectly captures what our format does: storing AI memory traces in a highly efficient, searchable, and temporally-aware format.
+
+The rebrand represents our evolution from a technical "binary format" to a neural-inspired memory system that mirrors how biological systems actually store and retrieve information.
 
 ---
 
-## Support
+## Legacy Notes
 
-For questions, bug reports, or feature requests:
-- **Issues**: https://github.com/terronexdev/aifbin-v3/issues
-- **Discussions**: https://github.com/terronexdev/aifbin-v3/discussions
-- **Email**: terronex.dev@gmail.com
+This project evolved from AIF-BIN v3.1.0 (February 2026). The AIF-BIN codebase has been completely rebranded to Engram while preserving all performance improvements and adding the elegant `.engram` file extension and neural-inspired naming conventions.

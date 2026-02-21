@@ -1,14 +1,14 @@
 /**
- * AIF-BIN v3 File I/O
+ * Engram File I/O
  * 
- * Reading and writing v3 files with optional encryption
+ * Reading and writing .engram files with optional encryption
  */
 
 import { encode, decode } from 'msgpackr';
 import { createHash, createCipheriv, createDecipheriv, randomBytes } from 'crypto';
 import {
-  AifBinV3File,
-  AifBinV3Header,
+  EngramFile,
+  EngramHeader,
   MemoryNode,
   Entity,
   MemoryLink,
@@ -18,9 +18,10 @@ import {
 
 // ============== CONSTANTS ==============
 
-const MAGIC = Buffer.from('AIFBIN');
-const VERSION_MAJOR = 3;
+const MAGIC = Buffer.from('ENGRAM');
+const VERSION_MAJOR = 1;
 const VERSION_MINOR = 0;
+export const ENGRAM_EXTENSION = '.engram';
 const HEADER_OFFSET = 12; // magic(6) + version(2) + headerLen(4)
 
 // ============== WRITER ==============
@@ -32,8 +33,8 @@ export interface WriteOptions {
   privateKey?: Buffer;
 }
 
-export async function writeAifBinV3(
-  file: AifBinV3File,
+export async function writeEngram(
+  file: EngramFile,
   options: WriteOptions = {}
 ): Promise<Buffer> {
   // Encode payload
@@ -70,7 +71,7 @@ export async function writeAifBinV3(
   }
   
   // Build header
-  const header: AifBinV3Header = {
+  const header: EngramHeader = {
     ...file.header,
     security,
     modified: Date.now()
@@ -109,13 +110,13 @@ export interface ReadOptions {
   verifyIntegrity?: boolean;
 }
 
-export async function readAifBinV3(
+export async function readEngram(
   data: Buffer,
   options: ReadOptions = {}
-): Promise<AifBinV3File> {
+): Promise<EngramFile> {
   // Verify magic
   if (!data.subarray(0, 6).equals(MAGIC)) {
-    throw new Error('Invalid AIF-BIN file: bad magic bytes');
+    throw new Error('Invalid Engram file: bad magic bytes');
   }
   
   // Check version
@@ -134,7 +135,7 @@ export async function readAifBinV3(
   
   // Read header
   const headerBytes = data.subarray(HEADER_OFFSET, HEADER_OFFSET + headerLen);
-  const header: AifBinV3Header = decode(headerBytes);
+  const header: EngramHeader = decode(headerBytes);
   
   // Read payload
   let payloadBytes = data.subarray(HEADER_OFFSET + headerLen);
@@ -346,7 +347,7 @@ interface AifBinV2 {
   }>;
 }
 
-export function migrateV2toV3(v2Data: AifBinV2): AifBinV3File {
+export function migrateV2toEngram(v2Data: AifBinV2): EngramFile {
   const now = Date.now();
   
   const nodes: MemoryNode[] = v2Data.chunks.map((chunk, i) => ({

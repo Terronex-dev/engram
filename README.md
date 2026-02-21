@@ -1,15 +1,15 @@
-# AIF-BIN v3.1.0
+# Engram v1.0.0
 
-> **Advanced Intelligent Format - Binary v3.1.0 with HNSW**  
-> High-performance hierarchical, temporal, multi-modal AI memory format for next-generation applications
+> **Neural Memory Format for AI Systems**  
+> High-performance hierarchical, temporal, multi-modal memory format inspired by biological memory traces
 
-[![npm version](https://badge.fury.io/js/@terronex%2Faifbin-v3.svg)](https://badge.fury.io/js/@terronex%2Faifbin-v3)
+[![npm version](https://badge.fury.io/js/@terronex%2Fengram.svg)](https://badge.fury.io/js/@terronex%2Fengram)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 
-## What is AIF-BIN v3?
+## What is Engram?
 
-AIF-BIN v3 is a revolutionary binary format designed specifically for AI applications that need to store, organize, and retrieve complex, multi-modal information with temporal intelligence. Unlike traditional vector databases, AIF-BIN v3 combines:
+Engram is a revolutionary neural memory format designed specifically for AI applications that need to store, organize, and retrieve complex, multi-modal information with temporal intelligence. Named after biological memory traces in neuroscience, Engram combines:
 
 - **Hierarchical Memory**: Tree-structured organization with parent-child relationships
 - **Temporal Intelligence**: Built-in time decay and relevance scoring
@@ -70,13 +70,13 @@ type LinkType =
 ## Installation
 
 ```bash
-npm install @terronex/aifbin-v3
+npm install @terronex/engram
 ```
 
 ## Quick Start
 
 ```typescript
-import { MemoryTree, writeAifBinV3, readAifBinV3, createNode, DEFAULT_HNSW_CONFIG } from '@terronex/aifbin-v3';
+import { MemoryTree, writeEngram, readEngram, createNode, DEFAULT_HNSW_CONFIG } from '@terronex/engram';
 
 // Create a memory tree with HNSW for high-performance search
 const hnswConfig = {
@@ -207,7 +207,7 @@ const secureFile = await writeAifBinV3(data, {
 ### Entity Recognition & Linking
 
 ```typescript
-import { Entity, MemoryLink, createLink } from '@terronex/aifbin-v3';
+import { Entity, MemoryLink, createLink } from '@terronex/engram';
 
 // Define entities
 const entities: Entity[] = [

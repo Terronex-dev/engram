@@ -1,7 +1,7 @@
 /**
- * AIF-BIN v3
+ * Engram v1.0.0
  * 
- * Hierarchical, temporal, multi-modal AI memory format
+ * Neural memory format for AI systems - hierarchical, temporal, multi-modal
  * 
  * @packageDocumentation
  */
@@ -28,14 +28,15 @@ export {
 
 // I/O
 export {
-  writeAifBinV3,
-  readAifBinV3,
+  writeEngram,
+  readEngram,
   StreamingWriter,
-  migrateV2toV3,
+  migrateV2toEngram,
   WriteOptions,
-  ReadOptions
+  ReadOptions,
+  ENGRAM_EXTENSION
 } from './io';
 
 // Version info
-export const VERSION = '3.1.0';
-export const FORMAT_VERSION = [3, 0] as const;
+export const VERSION = '1.0.0';
+export const FORMAT_VERSION = [1, 0] as const;

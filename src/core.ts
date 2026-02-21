@@ -5,8 +5,8 @@
  */
 
 import { 
-  AifBinV3File, 
-  AifBinV3Header, 
+  EngramFile, 
+  EngramHeader, 
   MemoryNode, 
   Entity, 
   MemoryLink,

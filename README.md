@@ -420,6 +420,6 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-**Developed by the Terronex team**
+**Developed by Terronex**
 
 *Engram: Neural memory format for the AI era.*

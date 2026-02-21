@@ -11,13 +11,13 @@ We actively support the following versions of Engram with security updates:
 
 ## Reporting a Vulnerability
 
-The Terronex team takes security vulnerabilities seriously. We appreciate your efforts to responsibly disclose your findings.
+The Engram project maintainers take security vulnerabilities seriously. We appreciate your efforts to responsibly disclose your findings.
 
 ### How to Report
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
-Instead, please send an email to: security@terronex.dev
+Instead, please send an email to: terronex.dev@gmail.com (with "SECURITY" in subject line)
 
 Include the following information:
 - Type of issue (buffer overflow, SQL injection, cross-site scripting, etc.)
@@ -64,4 +64,4 @@ Engram undergoes regular security reviews:
 - Static analysis security testing
 - Third-party security audits for major releases
 
-For questions about our security practices, please contact: security@terronex.dev
+For questions about security practices, please contact: terronex.dev@gmail.com

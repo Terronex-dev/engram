@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2026-02-21
 
-### 🎉 LAUNCH: Engram Neural Memory Format
+### LAUNCH: Engram Neural Memory Format
 
 **Engram** is born! A complete rebrand and evolution of AIF-BIN v3, inspired by biological memory traces in neuroscience.
 

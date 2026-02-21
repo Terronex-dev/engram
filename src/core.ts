@@ -1,7 +1,7 @@
 /**
- * AIF-BIN v3 Core Implementation
+ * Engram Core Implementation
  * 
- * Reader, Writer, and Tree operations
+ * Reader, Writer, and Tree operations for .engram files
  */
 
 import { 

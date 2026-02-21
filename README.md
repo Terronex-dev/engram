@@ -51,7 +51,7 @@ Memories automatically age and decay based on access patterns:
 
 ### HNSW High-Performance Search
 
-**NEW in v3.1.0**: Lightning-fast approximate nearest neighbor search:
+**NEW in v1.0.0**: Lightning-fast approximate nearest neighbor search:
 
 - **Sub-millisecond search** (~0.3ms vs 120ms brute force)
 - **400x performance improvement** for large datasets
@@ -121,8 +121,8 @@ const childNode = createNode({
 
 tree.addChild('doc-1', childNode);
 
-// Save to binary format
-const fileData = await writeAifBinV3({
+// Save to engram format
+const fileData = await writeEngram({
   header: {
     version: [3, 0],
     created: Date.now(),
@@ -143,10 +143,10 @@ const fileData = await writeAifBinV3({
 });
 
 // Write to file
-await fs.writeFile('my-memory.aif-bin', fileData);
+await fs.writeFile('my-memory.engram', fileData);
 
 // Read back
-const loadedFile = await readAifBinV3(await fs.readFile('my-memory.aif-bin'));
+const loadedFile = await readEngram(await fs.readFile('my-memory.engram'));
 const loadedTree = new MemoryTree(loadedFile.nodes);
 
 // Search with temporal relevance
@@ -196,7 +196,7 @@ const codeNode = createNode({
 ### Encryption & Security
 
 ```typescript
-const secureFile = await writeAifBinV3(data, {
+const secureFile = await writeEngram(data, {
   encrypt: true,
   password: 'my-secret-password'
 });
@@ -234,7 +234,7 @@ const link = createLink({
 
 ## Industry Applications
 
-AIF-BIN v3's unique architecture makes it ideal for:
+Engram's unique architecture makes it ideal for:
 
 - **Healthcare**: Patient records with temporal progression and multi-modal data
 - **Legal**: Case management with evidence hierarchies and citation networks
@@ -247,7 +247,7 @@ AIF-BIN v3's unique architecture makes it ideal for:
 
 ### Production Validation
 
-AIF-BIN v3 has been successfully deployed in production systems:
+Engram has been successfully deployed in production systems:
 
 - **93.3% recall accuracy** (vs. industry standard 60-80%)
 - **~0.3ms HNSW search time** (400x faster than brute force)
@@ -300,22 +300,22 @@ class MemoryTree {
 #### File I/O Functions
 
 ```typescript
-// Write AIF-BIN v3 file
-function writeAifBinV3(
-  file: AifBinV3File, 
+// Write Engram file
+function writeEngram(
+  file: EngramFile, 
   options?: WriteOptions
 ): Promise<Buffer>
 
-// Read AIF-BIN v3 file  
-function readAifBinV3(
+// Read Engram file  
+function readEngram(
   buffer: Buffer, 
   options?: ReadOptions
-): Promise<AifBinV3File>
+): Promise<EngramFile>
 
 // Streaming writer for large datasets
 class StreamingWriter {
   constructor(options: WriteOptions)
-  writeHeader(header: AifBinV3Header): Promise<void>
+  writeHeader(header: EngramHeader): Promise<void>
   writeNode(node: MemoryNode): Promise<void>
   writeEntity(entity: Entity): Promise<void>
   writeLink(link: MemoryLink): Promise<void>
@@ -360,20 +360,18 @@ function createLink(linkData: Partial<MemoryLink>): MemoryLink
 
 ## Roadmap
 
-### Current (v3.0.0)
+### Current (v1.0.0)
 - Core hierarchical memory system
 - Temporal decay intelligence
 - Multi-modal content support
 - Security & encryption framework
 - Semantic search capabilities
-
-### Current (v3.1.0)
 - HNSW indexing for lightning-fast search
 - Production-ready performance optimizations
 - Comprehensive test coverage
 - Professional documentation
 
-### Future (v3.2.0+)
+### Future (v1.1.0+)
 - Visual memory exploration tools
 - Industry-specific wrapper libraries
 - Multi-language SDKs (Python, Rust, Go)
@@ -388,8 +386,8 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 ### Development Setup
 
 ```bash
-git clone https://github.com/Terronex-dev/aifbinv3.git
-cd aifbin-v3
+git clone https://github.com/Terronex-dev/engram.git
+cd engram
 npm install
 npm run build
 npm test
@@ -409,19 +407,19 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Support
 
-- **Documentation**: [GitHub Wiki](https://github.com/Terronex-dev/aifbinv3/wiki)
-- **Bug Reports**: [GitHub Issues](https://github.com/Terronex-dev/aifbinv3/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/Terronex-dev/aifbinv3/discussions)
+- **Documentation**: [GitHub Wiki](https://github.com/Terronex-dev/engram/wiki)
+- **Bug Reports**: [GitHub Issues](https://github.com/Terronex-dev/engram/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Terronex-dev/engram/discussions)
 - **Contact**: terronex.dev@gmail.com
 
 ## Related Projects
 
-- **[AIF-BIN Studio](https://github.com/terronexdev/aifbin-studio)**: Visual memory exploration desktop app
-- **[AIF-BIN Pro](https://github.com/terronexdev/aifbin-pro)**: Professional CLI tools and utilities
-- **[AIF-BIN Lite](https://github.com/terronexdev/aifbin-lite)**: Lightweight CLI for basic operations
+- **[Engram Studio](https://github.com/Terronex-dev/engram-studio)**: Visual memory exploration desktop app
+- **[Engram Pro](https://github.com/Terronex-dev/engram-pro)**: Professional CLI tools and utilities
+- **[Engram Lite](https://github.com/Terronex-dev/engram-lite)**: Lightweight CLI for basic operations
 
 ---
 
 **Built by [Terronex](https://terronex.dev)**
 
-*AIF-BIN v3: The future of AI memory is here.*
+*Engram: Neural memory format for the AI era.*

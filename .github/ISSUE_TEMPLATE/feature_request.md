@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea for AIF-BIN v3
+about: Suggest an idea for Engram
 title: '[FEATURE] '
 labels: enhancement
 assignees: ''

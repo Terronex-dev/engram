@@ -1,5 +1,5 @@
 /**
- * Core functionality tests for AIF-BIN v3
+ * Core functionality tests for Engram v1.0.0
  */
 import { describe, it, expect, beforeEach } from 'vitest';
 import { MemoryTree, generateId, createNode, getDecayTier, searchNodes, searchNodesHNSW } from '../src/index';

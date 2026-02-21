@@ -1,6 +1,6 @@
-# Contributing to AIF-BIN v3
+# Contributing to Engram
 
-Thank you for your interest in contributing to AIF-BIN v3! This document provides guidelines and information for contributors.
+Thank you for your interest in contributing to Engram! This document provides guidelines and information for contributors.
 
 ## Code of Conduct
 
@@ -17,7 +17,7 @@ This project adheres to a code of conduct that we expect all contributors to fol
 ### Reporting Bugs
 
 Before submitting a bug report:
-1. Check the [existing issues](https://github.com/terronexdev/aifbin-v3/issues) to avoid duplicates
+1. Check the [existing issues](https://github.com/Terronex-dev/engram/issues) to avoid duplicates
 2. Test with the latest version to ensure the bug still exists
 3. Gather relevant information (version, environment, steps to reproduce)
 
@@ -49,8 +49,8 @@ Feature requests should include:
 1. **Fork the repository** on GitHub
 2. **Clone your fork** locally:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/aifbin-v3.git
-   cd aifbin-v3
+   git clone https://github.com/YOUR_USERNAME/engram.git
+   cd engram
    ```
 3. **Install dependencies**:
    ```bash
@@ -204,7 +204,7 @@ describe('MemoryTree', () => {
 ## Project Structure
 
 ```
-aifbin-v3/
+engram/
 ├── src/
 │   ├── core.ts          # Main MemoryTree class and utilities
 │   ├── types.ts         # TypeScript interfaces and types
@@ -290,4 +290,4 @@ Contributors will be recognized in:
 - **Release notes** for significant contributions
 - **GitHub contributors** page
 
-Thank you for contributing to AIF-BIN v3!
+Thank you for contributing to Engram!

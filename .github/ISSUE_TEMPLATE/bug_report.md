@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help us improve AIF-BIN v3
+about: Create a report to help us improve Engram
 title: '[BUG] '
 labels: bug
 assignees: ''
@@ -29,7 +29,7 @@ If applicable, provide a minimal code example that reproduces the issue:
 **Environment (please complete the following information):**
  - Node.js version: [e.g. 20.10.0]
  - npm version: [e.g. 10.2.3]
- - @terronex/aifbin-v3 version: [e.g. 3.0.0]
+ - @terronex/engram version: [e.g. 1.0.0]
  - OS: [e.g. Ubuntu 20.04, macOS 14.0, Windows 11]
 
 **Error messages**

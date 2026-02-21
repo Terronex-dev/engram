@@ -228,6 +228,26 @@ export const DEFAULT_DECAY_CONFIG: DecayConfig = {
   deleteOnExpire: false
 };
 
+// ============== HNSW CONFIG ==============
+
+export interface HNSWConfig {
+  space: 'l2' | 'cosine' | 'ip'; // Distance metric
+  numDimensions: number;         // Embedding dimensions
+  maxElements?: number;          // Maximum number of elements
+  M?: number;                    // Number of bi-directional links for each node (default: 16)
+  efConstruction?: number;       // Size of dynamic candidate list (default: 200)
+  randomSeed?: number;           // Random seed for reproducibility
+  allowReplaceDeleted?: boolean; // Allow replacing deleted elements
+}
+
+export const DEFAULT_HNSW_CONFIG: Partial<HNSWConfig> = {
+  space: 'cosine',
+  maxElements: 10000,
+  M: 16,
+  efConstruction: 200,
+  allowReplaceDeleted: true
+};
+
 // ============== SEARCH ==============
 
 export interface SearchOptions {

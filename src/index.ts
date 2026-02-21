@@ -8,6 +8,8 @@
 
 // Types
 export * from './types';
+export type { HNSWConfig } from './types';
+export { DEFAULT_HNSW_CONFIG } from './types';
 
 // Core
 export {
@@ -18,6 +20,8 @@ export {
   isExpired,
   cosineSimilarity,
   searchNodes,
+  searchNodesHNSW,
+  searchNodesBruteForce,
   createNode,
   createLink
 } from './core';

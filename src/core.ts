@@ -15,8 +15,10 @@ import {
   DEFAULT_DECAY_CONFIG,
   DecayConfig,
   SearchOptions,
-  SearchResult
+  SearchResult,
+  HNSWConfig
 } from './types';
+import { HierarchicalNSW } from 'hnswlib-node';
 
 // ============== CONSTANTS ==============
 
@@ -42,13 +44,69 @@ export function generateId(): string {
 export class MemoryTree {
   private nodes: Map<string, MemoryNode> = new Map();
   private rootIds: Set<string> = new Set();
+  private hnswIndex: HierarchicalNSW | null = null;
+  private idToLabel: Map<string, number> = new Map(); // Maps node ID to HNSW label
+  private labelToId: Map<number, string> = new Map(); // Maps HNSW label to node ID
+  private nextLabel: number = 0;
+  private hnswConfig: HNSWConfig | null = null;
   
-  constructor(nodes: MemoryNode[] = []) {
+  constructor(nodes: MemoryNode[] = [], hnswConfig?: HNSWConfig) {
+    // Initialize HNSW if config provided
+    if (hnswConfig) {
+      this.initializeHNSW(hnswConfig);
+    }
+    
     for (const node of nodes) {
       this.nodes.set(node.id, node);
       if (!node.parentId) {
         this.rootIds.add(node.id);
       }
+      
+      // Add to HNSW index if embedding exists
+      if (this.hnswIndex && node.embedding) {
+        this.addToHNSW(node.id, node.embedding);
+      }
+    }
+  }
+  
+  private initializeHNSW(config: HNSWConfig): void {
+    this.hnswConfig = config;
+    this.hnswIndex = new HierarchicalNSW(
+      config.space,
+      config.numDimensions
+    );
+    
+    if (config.maxElements) {
+      this.hnswIndex.initIndex(
+        config.maxElements,
+        config.M,
+        config.efConstruction,
+        config.randomSeed,
+        config.allowReplaceDeleted
+      );
+    }
+  }
+  
+  private addToHNSW(nodeId: string, embedding: Float32Array): void {
+    if (!this.hnswIndex) return;
+    
+    const label = this.nextLabel++;
+    this.idToLabel.set(nodeId, label);
+    this.labelToId.set(label, nodeId);
+    
+    // Convert Float32Array to regular Array for hnswlib-node
+    const embeddingArray = Array.from(embedding);
+    this.hnswIndex.addPoint(embeddingArray, label);
+  }
+  
+  private removeFromHNSW(nodeId: string): void {
+    if (!this.hnswIndex) return;
+    
+    const label = this.idToLabel.get(nodeId);
+    if (label !== undefined) {
+      this.hnswIndex.markDelete(label);
+      this.idToLabel.delete(nodeId);
+      this.labelToId.delete(label);
     }
   }
   
@@ -154,22 +212,36 @@ export class MemoryTree {
       }
     }
     
+    // Add to HNSW index if embedding exists
+    if (node.embedding) {
+      this.addToHNSW(node.id, node.embedding);
+    }
+    
     return node.id;
   }
   
-  addChild(parentId: string, node: Omit<MemoryNode, 'parentId' | 'depth' | 'path'>): string {
+  addChild(parentId: string, partialNode: Partial<MemoryNode> & { content: MemoryNode['content'] }): string {
     const parent = this.nodes.get(parentId);
     if (!parent) throw new Error(`Parent ${parentId} not found`);
     
-    const fullNode: MemoryNode = {
-      ...node,
-      parentId,
-      depth: parent.depth + 1,
-      path: `${parent.path}/${node.id}`,
-      children: node.children || []
-    } as MemoryNode;
+    // Leverage createNode to initialize with defaults, then override with parent-specific info
+    const childNode = createNode(partialNode.content.data as string, { // createNode expects string content
+      type: partialNode.content.type,
+      tags: partialNode.metadata?.tags,
+      metadata: partialNode.metadata?.custom,
+      // parentId and other tree-specific properties will be set next
+    });
+
+    // Manually set tree-specific properties derived from the parent
+    childNode.parentId = parentId;
+    childNode.depth = parent.depth + 1;
+    childNode.path = `${parent.path}/${childNode.id}`;
+    childNode.children = []; // Ensure it's an empty array initially for a new child
+
+    // Merge any other properties from partialNode
+    Object.assign(childNode, partialNode);
     
-    return this.add(fullNode);
+    return this.add(childNode);
   }
   
   update(id: string, updates: Partial<MemoryNode>): void {
@@ -194,9 +266,13 @@ export class MemoryTree {
     const node = this.nodes.get(id);
     if (!node) return;
     
+    // Remove from HNSW index first
+    this.removeFromHNSW(id);
+    
     if (cascade) {
       // Delete all descendants
       for (const descendant of this.getDescendants(id)) {
+        this.removeFromHNSW(descendant.id);
         this.nodes.delete(descendant.id);
       }
     } else {
@@ -295,6 +371,50 @@ export class MemoryTree {
       n => n.metadata.tags?.includes(tag)
     );
   }
+  
+  // HNSW utility methods
+  
+  hasHNSWIndex(): boolean {
+    return this.hnswIndex !== null;
+  }
+  
+  searchHNSW(queryEmbedding: Float32Array, k: number): Array<{nodeId: string, distance: number}> {
+    if (!this.hnswIndex) {
+      throw new Error('HNSW index not initialized');
+    }
+    
+    // Convert Float32Array to regular Array for hnswlib-node
+    const queryArray = Array.from(queryEmbedding);
+    const searchResults = this.hnswIndex.searchKnn(queryArray, k);
+    
+    return searchResults.neighbors.map((label: number, index: number) => ({
+      nodeId: this.labelToId.get(label) || '',
+      distance: searchResults.distances[index]
+    })).filter(result => result.nodeId !== '');
+  }
+  
+  buildHNSWIndex(config: HNSWConfig): void {
+    // Initialize HNSW if not already done
+    if (!this.hnswIndex) {
+      this.initializeHNSW(config);
+    }
+    
+    // Add all existing nodes with embeddings
+    for (const node of this.nodes.values()) {
+      if (node.embedding && !this.idToLabel.has(node.id)) {
+        this.addToHNSW(node.id, node.embedding);
+      }
+    }
+  }
+  
+  getHNSWStats(): {totalElements: number, currentCount: number} | null {
+    if (!this.hnswIndex) return null;
+    
+    return {
+      totalElements: this.hnswIndex.getMaxElements(),
+      currentCount: this.hnswIndex.getCurrentCount()
+    };
+  }
 }
 
 // ============== TEMPORAL OPERATIONS ==============
@@ -339,6 +459,80 @@ export function cosineSimilarity(a: Float32Array, b: Float32Array): number {
 }
 
 export function searchNodes(
+  tree: MemoryTree,
+  queryEmbedding: Float32Array,
+  options: SearchOptions
+): SearchResult[] {
+  // Use HNSW search if available, otherwise fall back to brute force
+  if (tree.hasHNSWIndex()) {
+    return searchNodesHNSW(tree, queryEmbedding, options);
+  } else {
+    return searchNodesBruteForce(tree, queryEmbedding, options);
+  }
+}
+
+export function searchNodesHNSW(
+  tree: MemoryTree,
+  queryEmbedding: Float32Array,
+  options: SearchOptions
+): SearchResult[] {
+  const {
+    topK = 10,
+    minScore = 0.5,
+    filters,
+    timeDecay = 0,
+    includeArchived = false
+  } = options;
+  
+  // Get initial candidates from HNSW (get more than topK to account for filtering)
+  const searchK = Math.max(topK * 3, 100);
+  const candidates = tree.searchHNSW(queryEmbedding, searchK);
+  
+  const results: SearchResult[] = [];
+  
+  for (const candidate of candidates) {
+    const node = tree.get(candidate.nodeId);
+    if (!node || !node.embedding) continue;
+    
+    // Apply filters
+    if (filters) {
+      if (filters.types && !filters.types.includes(node.content.type)) continue;
+      if (filters.tags && !filters.tags.some(t => node.metadata.tags?.includes(t))) continue;
+      if (filters.decayTiers && !filters.decayTiers.includes(node.temporal.decayTier)) continue;
+      if (filters.paths && !filters.paths.some(p => node.path.startsWith(p))) continue;
+      if (filters.dateRange) {
+        const [start, end] = filters.dateRange;
+        if (node.temporal.created < start || node.temporal.created > end) continue;
+      }
+    }
+    
+    // Skip archived unless requested
+    if (!includeArchived && node.temporal.decayTier === 'archive') continue;
+    
+    // Use distance from HNSW, convert to similarity
+    let score = 1.0 - candidate.distance; // Assuming cosine distance, convert to similarity
+    
+    // Apply time decay
+    if (timeDecay > 0) {
+      const daysSinceAccess = (Date.now() - node.temporal.accessed) / MS_PER_DAY;
+      const decayFactor = Math.exp(-timeDecay * daysSinceAccess);
+      score *= decayFactor;
+    }
+    
+    // Boost by quality score
+    score *= (0.5 + 0.5 * node.quality.score);
+    
+    if (score >= minScore) {
+      results.push({ node, score });
+    }
+  }
+  
+  // Sort by score and return top K
+  results.sort((a, b) => b.score - a.score);
+  return results.slice(0, topK);
+}
+
+export function searchNodesBruteForce(
   tree: MemoryTree,
   queryEmbedding: Float32Array,
   options: SearchOptions

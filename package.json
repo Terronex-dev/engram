@@ -1,6 +1,6 @@
 {
   "name": "@terronex/aifbin-v3",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "AIF-BIN v3 - Advanced hierarchical, temporal, multi-modal AI memory format",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -36,7 +36,11 @@
     "machine-learning",
     "artificial-intelligence",
     "data-structures",
-    "binary-format"
+    "binary-format",
+    "hnsw",
+    "approximate-nearest-neighbor",
+    "fast-search",
+    "high-performance"
   ],
   "author": {
     "name": "Terronex",
@@ -63,17 +67,18 @@
     "CHANGELOG.md"
   ],
   "dependencies": {
+    "hnswlib-node": "^3.0.0",
     "msgpackr": "^1.10.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
+    "@vitest/coverage-v8": "^1.0.0",
     "eslint": "^8.56.0",
     "typedoc": "^0.25.0",
     "typescript": "^5.3.0",
-    "vitest": "^1.0.0",
-    "@vitest/coverage-v8": "^1.0.0"
+    "vitest": "^1.0.0"
   },
   "publishConfig": {
     "access": "public",

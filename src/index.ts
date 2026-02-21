@@ -37,5 +37,5 @@ export {
 } from './io';
 
 // Version info
-export const VERSION = '3.0.0';
+export const VERSION = '3.1.0';
 export const FORMAT_VERSION = [3, 0] as const;

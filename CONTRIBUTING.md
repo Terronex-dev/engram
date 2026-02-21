@@ -280,7 +280,7 @@ engram/
 
 - **GitHub Discussions**: For questions and ideas
 - **GitHub Issues**: For bugs and feature requests  
-- **Email**: terronex.dev@gmail.com for private matters
+- **Email**: contact@terronex.dev for private matters
 - **Documentation**: Check the wiki and API docs first
 
 ## Recognition

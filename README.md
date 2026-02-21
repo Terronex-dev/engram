@@ -410,7 +410,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - **Documentation**: [GitHub Wiki](https://github.com/Terronex-dev/engram/wiki)
 - **Bug Reports**: [GitHub Issues](https://github.com/Terronex-dev/engram/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/Terronex-dev/engram/discussions)
-- **Contact**: terronex.dev@gmail.com
+- **Contact**: contact@terronex.dev
 
 ## Related Projects
 

@@ -17,7 +17,7 @@ The Engram project maintainers take security vulnerabilities seriously. We appre
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
-Instead, please send an email to: terronex.dev@gmail.com (with "SECURITY" in subject line)
+Instead, please send an email to: security@terronex.dev
 
 Include the following information:
 - Type of issue (buffer overflow, SQL injection, cross-site scripting, etc.)
@@ -64,4 +64,4 @@ Engram undergoes regular security reviews:
 - Static analysis security testing
 - Third-party security audits for major releases
 
-For questions about security practices, please contact: terronex.dev@gmail.com
+For questions about security practices, please contact: security@terronex.dev

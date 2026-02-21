@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.1.0] - 2026-02-21
 
 ### Added
-- **🚀 HNSW (Hierarchical Navigable Small World) indexing** for lightning-fast search
+- **HNSW (Hierarchical Navigable Small World) indexing** for lightning-fast search
 - **400x performance improvement** - sub-millisecond search times (~0.3ms vs 120ms)
 - **Automatic HNSW integration** - seamlessly falls back to brute force when not configured
 - **HNSW configuration options** with sensible defaults

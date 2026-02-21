@@ -1,7 +1,7 @@
-# AIF-BIN v3
+# AIF-BIN v3.1.0
 
-> **Advanced Intelligent Format - Binary v3**  
-> Hierarchical, temporal, multi-modal AI memory format for next-generation applications
+> **Advanced Intelligent Format - Binary v3.1.0 with HNSW**  
+> High-performance hierarchical, temporal, multi-modal AI memory format for next-generation applications
 
 [![npm version](https://badge.fury.io/js/@terronex%2Faifbin-v3.svg)](https://badge.fury.io/js/@terronex%2Faifbin-v3)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -11,13 +11,13 @@
 
 AIF-BIN v3 is a revolutionary binary format designed specifically for AI applications that need to store, organize, and retrieve complex, multi-modal information with temporal intelligence. Unlike traditional vector databases, AIF-BIN v3 combines:
 
-- **🌳 Hierarchical Memory**: Tree-structured organization with parent-child relationships
-- **⏰ Temporal Intelligence**: Built-in time decay and relevance scoring
-- **🎯 Multi-Modal Support**: Text, images, audio, code, and custom data types
-- **🔍 Semantic Search**: Vector embeddings with quality-aware ranking
-- **🔗 Entity Relationships**: Automatic entity recognition and linking
-- **🔐 Privacy-First**: Optional end-to-end encryption with local storage
-- **📱 Portable**: Single-file format that works offline
+- **Hierarchical Memory**: Tree-structured organization with parent-child relationships
+- **Temporal Intelligence**: Built-in time decay and relevance scoring
+- **Multi-Modal Support**: Text, images, audio, code, and custom data types
+- **Semantic Search**: Vector embeddings with quality-aware ranking
+- **Entity Relationships**: Automatic entity recognition and linking
+- **Privacy-First**: Optional end-to-end encryption with local storage
+- **Portable**: Single-file format that works offline
 
 ## Key Features
 
@@ -40,7 +40,7 @@ interface MemoryNode {
 }
 ```
 
-### ⚡ Temporal Decay System
+### Temporal Decay System
 
 Memories automatically age and decay based on access patterns:
 
@@ -49,7 +49,7 @@ Memories automatically age and decay based on access patterns:
 - **COLD** (30-90 days): Lower priority, summarized content  
 - **ARCHIVE** (90+ days): Minimal priority, compressed storage
 
-### 🚀 HNSW High-Performance Search
+### HNSW High-Performance Search
 
 **NEW in v3.1.0**: Lightning-fast approximate nearest neighbor search:
 
@@ -59,7 +59,7 @@ Memories automatically age and decay based on access patterns:
 - **Automatic fallback** to brute force when HNSW not configured
 - **99.9%+ accuracy** with massive speed gains
 
-### 🔗 Rich Relationship Modeling
+### Rich Relationship Modeling
 
 ```typescript
 type LinkType = 
@@ -239,7 +239,7 @@ AIF-BIN v3's unique architecture makes it ideal for:
 - **🏥 Healthcare**: Patient records with temporal progression and multi-modal data
 - **⚖️ Legal**: Case management with evidence hierarchies and citation networks
 - **💰 Financial**: Investment research with market data and temporal analysis
-- **🔬 Research**: Academic literature with citation networks and methodology tracking
+- **Research**: Academic literature with citation networks and methodology tracking
 - **🏭 Manufacturing**: IoT sensor data with predictive maintenance intelligence
 - **🌆 Smart Cities**: Urban analytics with multi-modal city data integration
 
@@ -361,11 +361,11 @@ function createLink(linkData: Partial<MemoryLink>): MemoryLink
 ## Roadmap
 
 ### Current (v3.0.0)
-- ✅ Core hierarchical memory system
-- ✅ Temporal decay intelligence
-- ✅ Multi-modal content support
-- ✅ Security & encryption framework
-- ✅ Semantic search capabilities
+- Core hierarchical memory system
+- Temporal decay intelligence
+- Multi-modal content support
+- Security & encryption framework
+- Semantic search capabilities
 
 ### Upcoming (v3.1.0)
 - 🔄 HNSW indexing for faster search
@@ -420,6 +420,6 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-**Built with ❤️ by [Terronex](https://terronex.dev)**
+**Built by [Terronex](https://terronex.dev)**
 
 *AIF-BIN v3: The future of AI memory is here.*

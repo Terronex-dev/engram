@@ -401,6 +401,17 @@ npm run test:watch     # Watch mode
 npm run test:coverage  # With coverage report
 ```
 
+## Testing Documentation
+
+Comprehensive testing results, performance benchmarks, and reliability metrics are available in [TESTING.md](TESTING.md).
+
+**Key Metrics:**
+- 28/28 tests passing (100% success rate)
+- Sub-millisecond search times (0.23-0.5ms average)
+- 400x performance improvement over brute force
+- 93.3% recall accuracy
+- Zero memory leaks detected
+
 ## License
 
 MIT License - see [LICENSE](LICENSE) file for details.

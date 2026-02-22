@@ -5,6 +5,29 @@ All notable changes to the Engram project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2026-02-22
+
+### CRITICAL BUG FIX
+
+**Fixed npm package module resolution issue that made v1.0.0 and v1.0.1 completely unusable.**
+
+### Fixed
+- **Module resolution**: Resolved "Cannot find module './types'" error in npm package
+- **Build configuration**: Removed conflicting ESM build that was overwriting CommonJS output
+- **TypeScript config**: Simplified to single CommonJS build for better Node.js compatibility
+- **Package usability**: Developers can now successfully `require('@terronex/engram')` and `import` from the package
+
+### Technical Changes
+- Removed `tsconfig.esm.json` file that was causing build conflicts
+- Updated build script to use `tsc` only (no dual CommonJS/ESM build)
+- All 28/28 tests continue to pass
+- No breaking changes to API or functionality
+
+### Impact
+- v1.0.0: ❌ Completely broken (import/require failed)
+- v1.0.1: ❌ Still broken (same issue persisted) 
+- v1.0.2: ✅ Working (module resolution fixed)
+
 ## [1.0.0] - 2026-02-21
 
 ### LAUNCH: Engram Neural Memory Format

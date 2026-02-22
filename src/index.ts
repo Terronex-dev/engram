@@ -30,6 +30,9 @@ export {
 export {
   writeEngram,
   readEngram,
+  writeEngramFile,
+  readEngramFile,
+  ensureEngramExtension,
   StreamingWriter,
   migrateV2toEngram,
   WriteOptions,
@@ -38,5 +41,5 @@ export {
 } from './io';
 
 // Version info
-export const VERSION = '1.0.2';
+export const VERSION = '1.0.3';
 export const FORMAT_VERSION = [1, 0] as const;

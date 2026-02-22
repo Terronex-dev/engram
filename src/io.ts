@@ -6,6 +6,7 @@
 
 import { encode, decode } from 'msgpackr';
 import { createHash, createCipheriv, createDecipheriv, randomBytes } from 'crypto';
+import { writeFile, readFile } from 'fs/promises';
 import {
   EngramFile,
   EngramHeader,
@@ -23,6 +24,20 @@ const VERSION_MAJOR = 1;
 const VERSION_MINOR = 0;
 export const ENGRAM_EXTENSION = '.engram';
 const HEADER_OFFSET = 12; // magic(6) + version(2) + headerLen(4)
+
+// ============== UTILITIES ==============
+
+/**
+ * Ensures a filename has the .engram extension
+ * @param filename - Input filename
+ * @returns Filename with .engram extension
+ */
+export function ensureEngramExtension(filename: string): string {
+  if (filename.toLowerCase().endsWith(ENGRAM_EXTENSION)) {
+    return filename;
+  }
+  return filename + ENGRAM_EXTENSION;
+}
 
 // ============== WRITER ==============
 
@@ -101,6 +116,38 @@ export async function writeEngram(
   Buffer.from(finalPayload).copy(output, HEADER_OFFSET + headerLen);
   
   return output;
+}
+
+/**
+ * Convenience function to write an Engram file to disk with automatic .engram extension
+ * @param filename - Output filename (extension will be added if missing)
+ * @param file - Engram file data
+ * @param options - Write options
+ * @returns Promise resolving to the actual filename written
+ */
+export async function writeEngramFile(
+  filename: string,
+  file: EngramFile,
+  options: WriteOptions = {}
+): Promise<string> {
+  const finalFilename = ensureEngramExtension(filename);
+  const buffer = await writeEngram(file, options);
+  await writeFile(finalFilename, buffer);
+  return finalFilename;
+}
+
+/**
+ * Convenience function to read an Engram file from disk
+ * @param filename - Input filename
+ * @param options - Read options
+ * @returns Promise resolving to the parsed Engram file
+ */
+export async function readEngramFile(
+  filename: string,
+  options: ReadOptions = {}
+): Promise<EngramFile> {
+  const buffer = await readFile(filename);
+  return readEngram(buffer, options);
 }
 
 // ============== READER ==============

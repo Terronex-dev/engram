@@ -76,7 +76,7 @@ npm install @terronex/engram
 ## Quick Start
 
 ```typescript
-import { MemoryTree, writeEngram, readEngram, createNode, DEFAULT_HNSW_CONFIG } from '@terronex/engram';
+import { MemoryTree, writeEngram, readEngram, writeEngramFile, readEngramFile, createNode, DEFAULT_HNSW_CONFIG } from '@terronex/engram';
 
 // Create a memory tree with HNSW for high-performance search
 const hnswConfig = {
@@ -142,12 +142,16 @@ const fileData = await writeEngram({
   links: []
 });
 
-// Write to file
-await fs.writeFile('my-memory.engram', fileData);
+// Write to file (automatic .engram extension)
+await writeEngramFile('my-memory', fileData);  // Creates 'my-memory.engram'
 
 // Read back
-const loadedFile = await readEngram(await fs.readFile('my-memory.engram'));
+const loadedFile = await readEngramFile('my-memory.engram');
 const loadedTree = new MemoryTree(loadedFile.nodes);
+
+// Alternative: Manual approach (still supported)
+// await fs.writeFile('my-memory.engram', await writeEngram(fileData));
+// const loaded = await readEngram(await fs.readFile('my-memory.engram'));
 
 // Search with temporal relevance
 const results = searchNodes(loadedTree.getAll(), {

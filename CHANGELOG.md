@@ -5,6 +5,34 @@ All notable changes to the Engram project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2026-02-22
+
+### NEW FEATURE: Automatic .engram Extension
+
+**Added convenience functions for automatic file extension handling.**
+
+### Added
+- **`writeEngramFile(filename, file, options)`**: Write Engram files to disk with automatic `.engram` extension
+- **`readEngramFile(filename, options)`**: Read Engram files from disk 
+- **`ensureEngramExtension(filename)`**: Utility to ensure filename has `.engram` extension
+
+### Enhanced Developer Experience
+- **Automatic extension**: `writeEngramFile('memory')` creates `memory.engram` 
+- **Smart handling**: `writeEngramFile('file.engram')` doesn't double-extend
+- **Backward compatible**: Original `writeEngram()` and `readEngram()` unchanged
+- **File I/O included**: No need to manually handle `fs.writeFile()` and `fs.readFile()`
+
+### Usage Examples
+```javascript
+// Old way (still works)
+const buffer = await writeEngram(file);
+await fs.writeFile('memory.engram', buffer);
+
+// New way (automatic extension)
+await writeEngramFile('memory', file);  // Creates 'memory.engram'
+const loaded = await readEngramFile('memory.engram');
+```
+
 ## [1.0.2] - 2026-02-22
 
 ### CRITICAL BUG FIX

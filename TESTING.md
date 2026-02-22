@@ -119,7 +119,7 @@ dist/
 
 ### Before vs After HNSW Implementation
 
-| Operation | AIF-BIN v2 (Brute Force) | Engram v1 (HNSW) | Improvement |
+| Operation | Brute Force Search | Engram v1 (HNSW) | Improvement |
 |-----------|--------------------------|-------------------|-------------|
 | Search (1K entries) | 61ms | 0.15ms | 406x faster |
 | Search (10K entries) | 580ms | 0.31ms | 1,871x faster |

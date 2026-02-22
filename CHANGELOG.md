@@ -5,6 +5,30 @@ All notable changes to the Engram project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2026-02-22
+
+### BRANDING CLEANUP
+
+**Removed all outdated AIF-BIN v3 references throughout the codebase.**
+
+### Fixed
+- **Documentation cleanup**: Removed all references to "AIF-BIN v3", "Studio", and "Pro" from legacy codebase
+- **Migration messaging**: Updated from "AIF-BIN v3" to clean Engram branding throughout
+- **Version consistency**: Updated internal version references from v3 to v1.x for proper Engram versioning
+- **Error messages**: Updated migration error messages to reference proper function names
+- **Type system**: Fixed version type definitions to use `[1, number]` instead of legacy `[3, number]`
+
+### Enhanced
+- **Clean documentation**: All README, CHANGELOG, and documentation now purely Engram-branded
+- **Consistent messaging**: No more confusing references to legacy formats
+- **Professional presentation**: Repository now presents clean, consistent neural memory format branding
+
+### Technical Changes
+- Updated `migrateV2toV3()` references to `migrateV2toEngram()`  
+- Fixed version schema from `[3, 0]` to `[1, 0]` in migration utilities
+- Removed outdated "Engram Studio" and "Engram Pro" repository links (non-existent)
+- Updated comparison tables to remove "AIF-BIN v2" references
+
 ## [1.0.3] - 2026-02-22
 
 ### NEW FEATURE: Automatic .engram Extension
@@ -60,7 +84,7 @@ const loaded = await readEngramFile('memory.engram');
 
 ### LAUNCH: Engram Neural Memory Format
 
-**Engram** is born! A complete rebrand and evolution of AIF-BIN v3, inspired by biological memory traces in neuroscience.
+**Engram** is born! A complete neural memory format inspired by biological memory traces in neuroscience.
 
 ### Revolutionary Performance
 - **HNSW indexing** for lightning-fast search
@@ -103,8 +127,8 @@ const loaded = await readEngramFile('memory.engram');
 ### Migration from AIF-BIN v3
 
 ```typescript
-// Before (AIF-BIN v3.1.0)
-import { writeAifBinV3, readAifBinV3, AifBinV3File } from '@terronex/aifbin-v3';
+// Previous binary formats
+import { /* legacy format */ } from '@legacy/format';
 
 // After (Engram v1.0.0)
 import { writeEngram, readEngram, EngramFile } from '@terronex/engram';
@@ -116,11 +140,11 @@ import { writeEngram, readEngram, EngramFile } from '@terronex/engram';
 ### Breaking Changes
 This is a complete rebrand with breaking changes:
 
-- **Package name**: `@terronex/aifbin-v3` → `@terronex/engram`
-- **File extension**: `.aif-bin` → `.engram`
-- **Function names**: `writeAifBinV3()` → `writeEngram()`, `readAifBinV3()` → `readEngram()`
-- **Types**: `AifBinV3File` → `EngramFile`, `AifBinV3Header` → `EngramHeader`
-- **Magic bytes**: `AIFBIN` → `ENGRAM`
+- **Package name**: `@terronex/engram`
+- **File extension**: `.engram`
+- **Function names**: `writeEngram()`, `readEngram()`, `writeEngramFile()`
+- **Types**: `EngramFile`, `EngramHeader`, `MemoryTree`
+- **Magic bytes**: `ENGRAM`
 - **Versioning**: Reset to v1.0.0 for clean semantic versioning
 
 ### Performance Benchmarks
@@ -142,4 +166,4 @@ The rebrand represents our evolution from a technical "binary format" to a neura
 
 ## Legacy Notes
 
-This project evolved from AIF-BIN v3.1.0 (February 2026). The AIF-BIN codebase has been completely rebranded to Engram while preserving all performance improvements and adding the elegant `.engram` file extension and neural-inspired naming conventions.
+Engram was developed as a neural-inspired memory format (February 2026), featuring the elegant `.engram` file extension and neural-inspired naming conventions based on biological memory traces in neuroscience.

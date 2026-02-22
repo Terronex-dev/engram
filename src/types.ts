@@ -7,7 +7,7 @@
 // ============== HEADER ==============
 
 export interface EngramHeader {
-  version: [3, number];
+  version: [1, number];
   created: number;
   modified: number;
   

@@ -429,8 +429,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Related Projects
 
-- **[Engram Studio](https://github.com/Terronex-dev/engram-studio)**: Visual memory exploration desktop app
-- **[Engram Pro](https://github.com/Terronex-dev/engram-pro)**: Professional CLI tools and utilities
+- **Desktop Tools**: Visual memory exploration and management applications
+- **Professional CLI**: Advanced tools and utilities for enterprise use
 - **[Engram Lite](https://github.com/Terronex-dev/engram-lite)**: Lightweight CLI for basic operations
 
 ---

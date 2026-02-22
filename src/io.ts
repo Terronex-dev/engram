@@ -172,7 +172,7 @@ export async function readEngram(
   
   if (majorVersion !== VERSION_MAJOR) {
     if (majorVersion === 2) {
-      throw new Error('This is a v2 file. Use migrateV2toV3() first.');
+      throw new Error('This is a v2 file. Use migrateV2toEngram() first.');
     }
     throw new Error(`Unsupported version: ${majorVersion}.${minorVersion}`);
   }
@@ -433,7 +433,7 @@ export function migrateV2toEngram(v2Data: AifBinV2): EngramFile {
   
   return {
     header: {
-      version: [3, 0],
+      version: [1, 0],
       created: v2Data.created,
       modified: now,
       

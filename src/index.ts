@@ -1,5 +1,5 @@
 /**
- * Engram v1.0.0
+ * Engram v1.0.4
  * 
  * Neural memory format for AI systems - hierarchical, temporal, multi-modal
  * 
@@ -41,5 +41,5 @@ export {
 } from './io';
 
 // Version info
-export const VERSION = '1.0.3';
+export const VERSION = '1.0.4';
 export const FORMAT_VERSION = [1, 0] as const;

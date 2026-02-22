@@ -69,7 +69,8 @@
     "LICENSE",
     "NOTICE",
     "CHANGELOG.md",
-    "TESTING.md"
+    "TESTING.md",
+    "VERSION.md"
   ],
   "dependencies": {
     "hnswlib-node": "^3.0.0",

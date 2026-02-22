@@ -405,7 +405,7 @@ export function migrateV2toEngram(v2Data: AifBinV2): EngramFile {
       schema: {
         embeddingModel: 'unknown',
         embeddingDims: nodes[0]?.embedding?.length || 384,
-        chunkStrategy: 'unknown' as any,
+        chunkStrategy: 'paragraph',
         modalities: ['text']
       },
       

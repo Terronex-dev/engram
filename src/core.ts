@@ -5,12 +5,8 @@
  */
 
 import { 
-  EngramFile, 
-  EngramHeader, 
   MemoryNode, 
-  Entity, 
   MemoryLink,
-  Delta,
   DecayTier,
   DEFAULT_DECAY_CONFIG,
   DecayConfig,
@@ -21,10 +17,6 @@ import {
 import { HierarchicalNSW } from 'hnswlib-node';
 
 // ============== CONSTANTS ==============
-
-const MAGIC = new Uint8Array([0x41, 0x49, 0x46, 0x42, 0x49, 0x4E]); // "AIFBIN"
-const VERSION_MAJOR = 3;
-const VERSION_MINOR = 0;
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 

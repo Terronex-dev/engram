@@ -1,6 +1,6 @@
 {
   "name": "@terronex/engram",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Engram - High-performance hierarchical, temporal, multi-modal AI memory format with neural-inspired architecture",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,7 +12,7 @@
     }
   },
   "scripts": {
-    "build": "tsc && tsc -p tsconfig.esm.json",
+    "build": "tsc",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",

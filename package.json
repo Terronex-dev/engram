@@ -73,6 +73,7 @@
     "VERSION.md"
   ],
   "dependencies": {
+    "@terronex/allo": "file:../allo",
     "hnswlib-node": "^3.0.0",
     "msgpackr": "^1.10.0"
   },

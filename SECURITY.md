@@ -65,3 +65,7 @@ Engram undergoes regular security reviews:
 - Third-party security audits for major releases
 
 For questions about security practices, please contact: security@terronex.dev
+
+## Important Notice
+
+The encryption and key derivation implementations in this software have not been independently audited by a third-party security firm. While we follow established cryptographic standards (AES-256-GCM, argon2id, PBKDF2), users handling sensitive data should perform their own security assessment before relying on these protections in production.

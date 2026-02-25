@@ -71,7 +71,7 @@ export async function writeEngram(
     security = {
       encrypted: true,
       algorithm: 'aes-256-gcm',
-      kdf: 'argon2id',
+      kdf: 'pbkdf2',
       salt: encrypted.salt,
       nonce: encrypted.nonce,
       integrity: hashPayload(finalPayload)
@@ -289,7 +289,7 @@ async function decryptPayload(
 }
 
 async function deriveKey(password: string, salt: Buffer): Promise<Buffer> {
-  // Simple PBKDF2 - replace with argon2 in production
+  // PBKDF2 with 100,000 iterations, SHA-256, 32-byte key
   const { pbkdf2Sync } = await import('crypto');
   return pbkdf2Sync(password, salt, 100000, 32, 'sha256');
 }

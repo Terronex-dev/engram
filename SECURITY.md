@@ -39,7 +39,7 @@ Include the following information:
 
 Engram includes several security features:
 
-- **Encryption**: AES-256-GCM encryption with Argon2ID key derivation
+- **Encryption**: AES-256-GCM encryption with PBKDF2 key derivation (100,000 iterations, SHA-256)
 - **Integrity**: Cryptographic integrity verification for all data
 - **Privacy**: Local-first architecture with optional cloud sync
 - **Access Control**: Hierarchical permission system for sensitive data

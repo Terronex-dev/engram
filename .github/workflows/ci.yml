@@ -42,7 +42,7 @@ jobs:
       with:
         file: ./coverage/lcov.info
         flags: unittests
-        name: aifbin-v3-coverage
+        name: engram-coverage
 
   publish:
     needs: test
@@ -66,8 +66,25 @@ jobs:
     - name: Build project
       run: npm run build
 
+    - name: Check if version already published
+      id: version-check
+      run: |
+        PKG_VERSION=$(node -p "require('./package.json').version")
+        echo "version=$PKG_VERSION" >> $GITHUB_OUTPUT
+        if npm view @terronex/engram@$PKG_VERSION version 2>/dev/null; then
+          echo "published=true" >> $GITHUB_OUTPUT
+          echo "Version $PKG_VERSION already published, skipping."
+        else
+          echo "published=false" >> $GITHUB_OUTPUT
+          echo "Version $PKG_VERSION not yet published."
+        fi
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
     - name: Publish to npm
       run: npm publish --access public
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      if: "!contains(github.event.head_commit.message, 'skip-publish')"
+      if: |
+        steps.version-check.outputs.published == 'false' &&
+        !contains(github.event.head_commit.message, 'skip-publish')

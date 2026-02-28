@@ -335,3 +335,33 @@ describe('V2 Type Extensions', () => {
     expect(node.confidence).toBe(0.95);
   });
 });
+
+describe('V2 Spec Compliance', () => {
+  it('should support embedded links on nodes (spec format)', () => {
+    const node = createNode('Test node');
+    
+    // Spec shows links embedded in node
+    (node as any).links = [
+      { target: 'other-id', type: 'supports', weight: 0.9 },
+      { target: 'another-id', type: 'contradicts' }
+    ];
+    
+    expect((node as any).links).toHaveLength(2);
+    expect((node as any).links[0].type).toBe('supports');
+  });
+
+  it('should support embedding config in header', () => {
+    const header = {
+      version: [2, 0] as [number, number],
+      created: Date.now(),
+      modified: Date.now(),
+      embedding: {
+        model: 'all-MiniLM-L6-v2',
+        dimensions: 384,
+        provider: 'local'
+      }
+    };
+    
+    expect(header.embedding.dimensions).toBe(384);
+  });
+});

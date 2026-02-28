@@ -203,7 +203,11 @@ export type LinkType =
   | 'elaborates' 
   | 'summarizes' 
   | 'causes' 
-  | 'follows';
+  | 'follows'
+  // V2 additions
+  | 'supports'
+  | 'derived_from'
+  | 'similar_to';
 
 export type LinkCreator = 'user' | 'agent' | 'system';
 

@@ -520,24 +520,22 @@ function createLink(linkData: Partial<MemoryLink>): MemoryLink
 
 ## Roadmap
 
-### Current (v1.0.0)
-- Core hierarchical memory system
-- Temporal decay intelligence
-- Multi-modal content support
-- Security & encryption framework
-- Semantic search capabilities
-- HNSW indexing for lightning-fast search
-- Production-ready performance optimizations
-- Comprehensive test coverage
-- Professional documentation
+### Shipped
 
-### Future (v1.1.0+)
-- Visual memory exploration tools
-- Industry-specific wrapper libraries
-- Multi-language SDKs (Python, Rust, Go)
-- Cloud synchronization capabilities
-- Streaming delta operations
-- Advanced entity relationship detection
+| Version | Features |
+|---------|----------|
+| **V1.0** | Hierarchical memory, temporal decay, HNSW search, encryption |
+| **V2.0** | Typed links, graph traversal, auto-linking, confidence scores |
+| **V2.1** | Spatial intelligence (spatialRecall, findNearby, Haversine/Euclidean) |
+
+### Coming
+
+| Version | Features |
+|---------|----------|
+| **V2.2** | Map visualization, spatial teaching mode |
+| **V3.0** | UMAP/t-SNE auto-layout, 3D visualization |
+
+Multi-language SDKs available: [Python](https://github.com/Terronex-dev/engram-py), [Rust](https://github.com/Terronex-dev/engram-rs), [Go](https://github.com/Terronex-dev/engram-go)
 
 ## Contributing
 

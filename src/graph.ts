@@ -145,7 +145,7 @@ export class MemoryGraph {
     const nodeIds = new Set<string>();
 
     for (const link of links) {
-      if (link.type === 'related' || link.type === 'elaborates') {
+      if (link.type === 'supports' || link.type === 'elaborates') {
         nodeIds.add(link.sourceId);
       }
     }

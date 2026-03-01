@@ -41,6 +41,44 @@ graph.autoLinkSimilar(0.85);
 
 See [SPEC_V2.md](SPEC_V2.md) for the full specification.
 
+## What's New in V2.1: Spatial Intelligence
+
+**V2.1** makes spatial positions queryable — find memories by location, not just meaning:
+
+```typescript
+import { spatialRecall, findNearby, haversineDistance } from '@terronex/engram';
+
+// Find memories within 500km of Paris
+const nearby = spatialRecall(tree, {
+  center: { x: 48.8566, y: 2.3522 },  // lat/lon
+  radius: 500,                         // km
+  metric: 'haversine'
+});
+
+// Hybrid: semantic + spatial
+const results = spatialRecall(tree, {
+  center: { x: 48.8566, y: 2.3522 },
+  radius: 100,
+  metric: 'haversine',
+  queryEmbedding: searchVector  // optional semantic filter
+});
+
+// Find memories near another memory
+const related = findNearby(tree, memoryId, 10);
+
+// Distance calculations
+const km = haversineDistance(lat1, lon1, lat2, lon2);
+```
+
+| Feature | V2.0 | V2.1 |
+|---------|------|------|
+| Typed links | ✓ | ✓ |
+| Graph traversal | ✓ | ✓ |
+| Store positions | ✓ | ✓ |
+| **Query by distance** | ✗ | ✓ |
+| **Geo queries (Haversine)** | ✗ | ✓ |
+| **Hybrid semantic+spatial** | ✗ | ✓ |
+
 ## What is Engram?
 
 Engram is a revolutionary neural memory format designed specifically for AI applications that need to store, organize, and retrieve complex, multi-modal information with temporal intelligence. Named after biological memory traces in neuroscience, Engram combines:

@@ -96,7 +96,7 @@ describe('Engram I/O', () => {
     
     // Test read
     const readFile = await readEngram(buffer);
-    expect(readFile.header.version).toEqual([2, 0]);
+    expect(readFile.header.version).toEqual([2, 1]);
     expect(readFile.nodes).toHaveLength(1);
     expect(readFile.nodes[0].id).toBe('test-node');
     expect(readFile.nodes[0].content.data).toBe('test content');
@@ -281,7 +281,7 @@ describe('Engram I/O', () => {
 
     const engram = migrateV2toEngram(v2Data);
     
-    expect(engram.header.version).toEqual([2, 0]);
+    expect(engram.header.version).toEqual([2, 1]);
     expect(engram.nodes).toHaveLength(2);
     expect(engram.nodes[0].content.data).toBe('First chunk content');
     expect(engram.nodes[1].content.data).toBe('Second chunk content');

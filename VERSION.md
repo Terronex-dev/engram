@@ -5,30 +5,30 @@
 ## Release Timeline
 
 ### v1.0.4 (2026-02-22)
-- **Status:** ✅ Published to NPM
+- **Status:** [OK] Published to NPM
 - **NPM:** `npm install @terronex/engram@1.0.4`
 - **Changes:** Comprehensive branding cleanup, removed all AIF-BIN v3 references
 - **Technical:** No functional changes, pure documentation cleanup
 
 ### v1.0.3 (2026-02-22) 
-- **Status:** ✅ Published to NPM
+- **Status:** [OK] Published to NPM
 - **Changes:** Added automatic .engram file extension handling
 - **New Functions:** `writeEngramFile()`, `readEngramFile()`, `ensureEngramExtension()`
 - **Developer Experience:** Auto-extension when saving files
 
 ### v1.0.2 (2026-02-22)
-- **Status:** ✅ Published to NPM  
+- **Status:** [OK] Published to NPM  
 - **Changes:** CRITICAL BUG FIX - Fixed npm package module resolution
 - **Technical:** Removed conflicting ESM build, CommonJS only
 - **Impact:** Package now actually usable (v1.0.0 and v1.0.1 were broken)
 
 ### v1.0.1 (2026-02-22)
-- **Status:** ❌ Broken (module resolution issues)
+- **Status:** [BROKEN] Broken (module resolution issues)
 - **Changes:** Attempted module resolution fix
 - **Issue:** TypeScript dual-build conflict persisted
 
 ### v1.0.0 (2026-02-22)
-- **Status:** ❌ Broken (module resolution issues) 
+- **Status:** [BROKEN] Broken (module resolution issues) 
 - **Changes:** Initial public release with HNSW performance improvements
 - **Performance:** 400x improvement over brute force search
 - **Issue:** "Cannot find module './types'" error made package unusable

@@ -15,6 +15,7 @@ import {
   HNSWConfig
 } from './types';
 import { HierarchicalNSW } from 'hnswlib-node';
+import { rerankWithContext } from './relevance';
 
 // ============== CONSTANTS ==============
 
@@ -473,7 +474,10 @@ export function searchNodesHNSW(
     minScore = 0.5,
     filters,
     timeDecay = 0,
-    includeArchived = false
+    includeArchived = false,
+    taskContext,
+    graph,
+    recentNodeIds
   } = options;
   
   // Get initial candidates from HNSW (get more than topK to account for filtering)
@@ -519,6 +523,17 @@ export function searchNodesHNSW(
     }
   }
   
+  // v2.2: Task-aware reranking (only when taskContext is provided)
+  if (taskContext) {
+    const reranked = rerankWithContext(
+      results,
+      { taskContext },
+      graph ?? undefined,
+      recentNodeIds
+    );
+    return reranked.slice(0, topK);
+  }
+  
   // Sort by score and return top K
   results.sort((a, b) => b.score - a.score);
   return results.slice(0, topK);
@@ -534,7 +549,10 @@ export function searchNodesBruteForce(
     minScore = 0.5,
     filters,
     timeDecay = 0,
-    includeArchived = false
+    includeArchived = false,
+    taskContext,
+    graph,
+    recentNodeIds
   } = options;
   
   const results: SearchResult[] = [];
@@ -574,6 +592,17 @@ export function searchNodesBruteForce(
     if (score >= minScore) {
       results.push({ node, score });
     }
+  }
+  
+  // v2.2: Task-aware reranking (only when taskContext is provided)
+  if (taskContext) {
+    const reranked = rerankWithContext(
+      results,
+      { taskContext },
+      graph ?? undefined,
+      recentNodeIds
+    );
+    return reranked.slice(0, topK);
   }
   
   // Sort by score and return top K

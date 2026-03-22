@@ -155,6 +155,7 @@ export interface NodeMetadata {
   sourceLine?: number;
   tags?: string[];
   custom?: Record<string, unknown>;
+  accessLog?: AccessEntry[];  // v2.2: access history for task-aware reranking
 }
 
 // V2: Spatial position
@@ -300,6 +301,9 @@ export interface SearchOptions {
   filters?: SearchFilters;
   timeDecay?: number;
   includeArchived?: boolean;
+  taskContext?: TaskContext;    // v2.2: task-aware reranking
+  graph?: import('./graph').MemoryGraph;  // v2.2: graph-aware reranking
+  recentNodeIds?: string[];    // v2.2: recently accessed node IDs for context
 }
 
 export interface SearchFilters {
@@ -315,4 +319,25 @@ export interface SearchResult {
   node: MemoryNode;
   score: number;
   highlights?: string[];
+}
+
+// ============== TASK-AWARE RETRIEVAL (v2.2) ==============
+
+export interface TaskContext {
+  intent: string;            // "debugging", "preference_recall", "fact_lookup", "research", "planning"
+  recentActions?: string[];  // what the agent just did (optional context)
+  domain?: string;           // "code", "personal", "research", "general"
+}
+
+export interface AccessEntry {
+  timestamp: number;
+  intent?: string;
+  useful?: boolean;          // feedback signal: was this memory helpful?
+}
+
+export interface RerankOptions {
+  taskContext: TaskContext;
+  graphNeighborBoost?: number;   // boost for graph-connected nodes (default 0.1)
+  intentMatchBoost?: number;     // boost for intent-matching access history (default 0.15)
+  accessPatternWeight?: number;  // weight for access pattern signal (default 0.1)
 }

@@ -169,8 +169,8 @@ Links are **unidirectional** by default:
 ```
 A ──supports──▶ B
 
-✓ A supports B
-✗ B does NOT support A
+Y A supports B
+N B does NOT support A
 ```
 
 Set `bidirectional: true` for symmetric relationships:
@@ -178,8 +178,8 @@ Set `bidirectional: true` for symmetric relationships:
 ```
 A ◀──related──▶ B
 
-✓ A relates to B
-✓ B relates to A
+Y A relates to B
+Y B relates to A
 ```
 
 ---
@@ -238,9 +238,9 @@ function load(buffer: Uint8Array): Brain {
 
 MessagePack ignores unknown fields. V1 readers will:
 
-- ✓ Read all V1 fields correctly
-- ✓ Function normally
-- ✗ Ignore `links`, `position`, `confidence`
+- Y Read all V1 fields correctly
+- Y Function normally
+- N Ignore `links`, `position`, `confidence`
 
 ---
 
@@ -436,13 +436,13 @@ Engram V2 transforms the memory format from a **tree** to a **graph**:
 
 | Feature            | V1  | V2  |
 |--------------------|-----|-----|
-| Semantic search    | ✓   | ✓   |
-| Hierarchical tree  | ✓   | ✓   |
-| Typed links        | ✗   | ✓   |
-| Graph traversal    | ✗   | ✓   |
-| Spatial positions  | ✗   | ✓   |
-| Confidence scores  | ✗   | ✓   |
-| Embedding config   | ✗   | ✓   |
+| Semantic search    | Y   | Y   |
+| Hierarchical tree  | Y   | Y   |
+| Typed links        | N   | Y   |
+| Graph traversal    | N   | Y   |
+| Spatial positions  | N   | Y   |
+| Confidence scores  | N   | Y   |
+| Embedding config   | N   | Y   |
 
 The format remains simple, portable, and efficient while enabling knowledge graph capabilities essential for agent reasoning.
 

@@ -5,6 +5,52 @@ All notable changes to the Engram project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-03-22
+
+### Added: Task-Aware Retrieval Routing (Phase 1)
+
+**V2.2 adds context-driven reranking.** Search results are re-scored based on
+what the agent is trying to do, not just embedding similarity.
+
+#### New Types
+- **`TaskContext`**: Describes the current task (`intent`, `domain`, `recentActions`)
+- **`AccessEntry`**: Records when and how a memory was accessed (`timestamp`, `intent`, `useful`)
+- **`RerankOptions`**: Configuration for the reranking step (boost weights)
+
+#### New Functions
+- **`rerankWithContext(candidates, options, graph?, recentNodeIds?)`**: Re-score search
+  results using tag-intent matching, access pattern history, graph neighbor proximity,
+  and content-type alignment
+- **`recordAccess(node, intent?, useful?)`**: Append an access entry to a node and
+  update its `temporal.accessed` timestamp (immutable -- returns a new node)
+
+#### New SearchOptions Fields
+- **`taskContext`**: Pass a `TaskContext` to enable automatic reranking inside
+  `searchNodes`, `searchNodesHNSW`, and `searchNodesBruteForce`
+- **`graph`**: Optional `MemoryGraph` for graph-neighbor boosting during search
+- **`recentNodeIds`**: IDs of recently accessed nodes for context-aware boosting
+
+#### Reranking Signals
+1. **Tag-intent matching** -- nodes tagged with terms relevant to the current intent
+   (e.g., "error-fix" for "debugging") receive a configurable boost.
+2. **Access pattern scoring** -- nodes previously accessed under the same intent and
+   marked useful get boosted; those marked not useful receive a slight penalty.
+   Recent entries carry more weight than old ones (exponential decay).
+3. **Graph neighbor boost** -- nodes linked to recently-accessed nodes via
+   `MemoryGraph` are boosted, capturing "related to current work" without
+   requiring embedding similarity.
+4. **Content-type matching** -- code nodes rank higher for code/debugging domains;
+   text nodes rank higher for research/personal domains.
+
+#### Backward Compatibility
+- All new fields are optional. Existing code calling `searchNodes()` without
+  `taskContext` produces identical results to v2.1.x.
+- The binary `.engram` format is unchanged (`FORMAT_VERSION` remains `[2, 1]`).
+- `accessLog` is stored in `NodeMetadata`, which is already serialized as part
+  of the existing format.
+
+---
+
 ## [2.1.0] - 2026-02-28
 
 ### Added: Spatial Intelligence
@@ -190,9 +236,9 @@ const loaded = await readEngramFile('memory.engram');
 - No breaking changes to API or functionality
 
 ### Impact
-- v1.0.0: ❌ Completely broken (import/require failed)
-- v1.0.1: ❌ Still broken (same issue persisted) 
-- v1.0.2: ✅ Working (module resolution fixed)
+- v1.0.0: [BROKEN] Completely broken (import/require failed)
+- v1.0.1: [BROKEN] Still broken (same issue persisted) 
+- v1.0.2: [OK] Working (module resolution fixed)
 
 ## [1.0.0] - 2026-02-21
 

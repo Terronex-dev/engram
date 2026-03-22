@@ -32,12 +32,12 @@ graph.autoLinkSimilar(0.85);
 
 | Feature | V1 | V2 |
 |---------|----|----|
-| Semantic search | ✓ | ✓ |
-| Hierarchical tree | ✓ | ✓ |
-| **Typed links** | ✗ | ✓ |
-| **Graph traversal** | ✗ | ✓ |
-| **Spatial positions** | ✗ | ✓ |
-| **Confidence scores** | ✗ | ✓ |
+| Semantic search | Y | Y |
+| Hierarchical tree | Y | Y |
+| **Typed links** | N | Y |
+| **Graph traversal** | N | Y |
+| **Spatial positions** | N | Y |
+| **Confidence scores** | N | Y |
 
 See [SPEC_V2.md](SPEC_V2.md) for the full specification.
 
@@ -72,12 +72,49 @@ const km = haversineDistance(lat1, lon1, lat2, lon2);
 
 | Feature | V2.0 | V2.1 |
 |---------|------|------|
-| Typed links | ✓ | ✓ |
-| Graph traversal | ✓ | ✓ |
-| Store positions | ✓ | ✓ |
-| **Query by distance** | ✗ | ✓ |
-| **Geo queries (Haversine)** | ✗ | ✓ |
-| **Hybrid semantic+spatial** | ✗ | ✓ |
+| Typed links | Y | Y |
+| Graph traversal | Y | Y |
+| Store positions | Y | Y |
+| **Query by distance** | N | Y |
+| **Geo queries (Haversine)** | N | Y |
+| **Hybrid semantic+spatial** | N | Y |
+
+## What's New in V2.2: Task-Aware Retrieval
+
+**V2.2 adds context-driven reranking.** Search results are re-scored based on
+what the agent is trying to do, not just embedding similarity:
+
+```typescript
+import { searchNodes, recordAccess, MemoryGraph } from '@terronex/engram';
+
+// Search with task context -- results are reranked automatically
+const results = searchNodes(tree, queryEmbedding, {
+  query: 'error handling',
+  topK: 10,
+  taskContext: {
+    intent: 'debugging',     // what the agent is doing
+    domain: 'code',          // boosts code nodes over text
+  },
+  graph,                     // optional: enables graph-neighbor boosting
+  recentNodeIds: ['node-42'] // optional: IDs of recently accessed nodes
+});
+
+// After using a result, record feedback for future reranking
+const updatedNode = recordAccess(results[0].node, 'debugging', true);
+// true = this memory was useful; future debugging searches will prefer it
+```
+
+Reranking signals: tag-intent matching, access pattern history (recency-weighted),
+graph neighbor proximity, and content-type alignment. Fully backward compatible --
+omit `taskContext` and behavior is identical to v2.1.
+
+| Feature | V2.1 | V2.2 |
+|---------|------|------|
+| Spatial queries | yes | yes |
+| Graph traversal | yes | yes |
+| **Task-aware reranking** | -- | yes |
+| **Access pattern learning** | -- | yes |
+| **Graph-neighbor boosting** | -- | yes |
 
 ## What is Engram?
 
@@ -527,13 +564,16 @@ function createLink(linkData: Partial<MemoryLink>): MemoryLink
 | **V1.0** | Hierarchical memory, temporal decay, HNSW search, encryption |
 | **V2.0** | Typed links, graph traversal, auto-linking, confidence scores |
 | **V2.1** | Spatial intelligence (spatialRecall, findNearby, Haversine/Euclidean) |
+| **V2.2** | Task-aware retrieval routing, access pattern learning, graph-neighbor boosting |
 
 ### Coming
 
 | Version | Features |
 |---------|----------|
-| **V2.2** | Map visualization, spatial teaching mode |
-| **V3.0** | UMAP/t-SNE auto-layout, 3D visualization |
+| **V2.3** | Hierarchical cluster summaries, two-stage retrieval |
+| **V2.4** | Memory metacognition, knowledge gap detection |
+
+See [ROADMAP.md](ROADMAP.md) for the full plan.
 
 Multi-language SDKs available: [Python](https://github.com/Terronex-dev/engram-py), [Rust](https://github.com/Terronex-dev/engram-rs), [Go](https://github.com/Terronex-dev/engram-go)
 

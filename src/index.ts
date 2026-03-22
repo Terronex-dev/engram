@@ -1,9 +1,10 @@
 /**
- * Engram v2.1.0
+ * Engram v2.2.0
  * 
  * Neural memory format for AI systems - hierarchical, temporal, multi-modal
  * V2: Graph extensions with typed links, spatial positions, and auto-linking
  * V2.1: Spatial recall - distance-based queries, geo support
+ * V2.2: Task-aware retrieval routing - context-driven reranking
  * 
  * @packageDocumentation
  */
@@ -41,6 +42,12 @@ export {
   Position
 } from './graph';
 
+// V2.2: Task-aware retrieval
+export {
+  rerankWithContext,
+  recordAccess
+} from './relevance';
+
 // I/O
 export {
   writeEngram,
@@ -56,5 +63,5 @@ export {
 } from './io';
 
 // Version info
-export const VERSION = '2.1.2';
+export const VERSION = '2.2.0';
 export const FORMAT_VERSION = [2, 1] as const;

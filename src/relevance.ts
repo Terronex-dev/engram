@@ -8,7 +8,6 @@
 import {
   SearchResult,
   MemoryNode,
-  TaskContext,
   AccessEntry,
   RerankOptions,
 } from './types';
